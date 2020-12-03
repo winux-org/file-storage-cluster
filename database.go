@@ -16,7 +16,7 @@ func GenerateFileHash() string {
 	return "random"
 }
 
-func CreateFileEntry(hash string) {
+func ConnectToDatabase() {
 	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
