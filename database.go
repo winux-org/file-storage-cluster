@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"log"
 
 	"github.com/jackc/pgx"
 )
@@ -18,7 +19,10 @@ func GenerateFileHash() string {
 
 func ConnectToDatabase() {
 	//conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
-	conn, err := pgx.Connect(context.Background(), "postgres://postgres:password@localhost:5430/files")
+
+	log.Fatalf("Config: %v", Conf.Env)
+
+	conn, err := pgx.Connect(context.Background(), "postgres://postgres:password@localhost:5432/files")
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)

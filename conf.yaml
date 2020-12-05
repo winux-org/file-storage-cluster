@@ -1,0 +1,11 @@
+env: test
+
+database:
+  port: 5432
+  domain: localhost
+  username: postgres
+  password: password
+  database_name: files
+
+service:
+  data_path: asdf
