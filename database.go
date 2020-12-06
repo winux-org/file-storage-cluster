@@ -2,10 +2,11 @@ package main
 
 import (
 	"context"
-	"fmt"
-	"os"
+	// "fmt"
+	// "os"
 
-	"github.com/jackc/pgx"
+	//"github.com/jackc/pgx"
+	"github.com/jackc/pgx/pgxpool"
 )
 
 func InitialiseFile() File {
@@ -16,12 +17,33 @@ func GenerateFileHash() string {
 	return "random"
 }
 
+var dbpool *pgxpool.Pool
+
+func DBpool() *pgxpool.Pool {
+	return dbpool
+}
+
+func ConnectToDatabase() {
+	config, err := pgxpool.ParseConfig("postgres://postgres:password@localhost:5432/files")
+	if err != nil {
+		// ...
+	}
+	// config.AfterConnect = func(ctx context.Context, conn *pgx.Conn) error {
+	// 	// do something with every new connection
+	// }
+	
+	dbpool, _ = pgxpool.ConnectConfig(context.Background(), config)
+	//dbpool = newdbpool
+}
+
+
+/*
 func ConnectToDatabase() {
 	//conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 
 	//log.Fatalf("Config: %v", Conf.Env)
 
-	conn, err := pgx.Connect(context.Background(), "postgres://postgres:password@localhost:5430/files")
+	conn, err := pgx.Connect(context.Background(), "postgres://postgres:password@localhost:5432/files")
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
@@ -40,3 +62,4 @@ func ConnectToDatabase() {
 
 	fmt.Println("id", id)
 }
+*/

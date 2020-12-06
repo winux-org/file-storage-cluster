@@ -10,6 +10,8 @@ import "net/http"
 // docker exec -it pg-db sh
 // docker attach --sig-proxy=false pg-db
 
+// docker images --all
+
 func main() {
 	ConnectToDatabase()
 	SetupRPC()

@@ -71,4 +71,5 @@ func SetupRPC() {
 	failOnError(err, "Failed to connect to RabbitMQ")
 	fmt.Print("starting rpc")
 	go setupInitRPC(conn, "file_init_prc", InitFileRPC)
+	go setupInitRPC(conn, "delete_file_prc", DeleteFileRPC)
 }
