@@ -1,4 +1,4 @@
-env1: test
+env: test
 
 database:
   port: 5432
