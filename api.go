@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
 
@@ -38,7 +39,8 @@ type initState struct {
 }
 
 func initFileUploadingHandler(w http.ResponseWriter, r *http.Request) {
-	newFile := initState{Hash: "new hash"}
+	fileUUID, _ := uuid.NewRandom()
+	newFile := initState{Hash: fileUUID.String()}
 	newFileJSON, _ := json.Marshal(newFile)
 	// w := io.PipeWriter{}
 	// defer w.Close()
