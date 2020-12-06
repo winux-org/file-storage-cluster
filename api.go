@@ -3,6 +3,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -25,11 +26,24 @@ func (h HttpHandler) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 
 // SetupHTTPRouting configures and setup the endpoints
 func SetupHTTPRouting() {
-	http.HandleFunc("/fil/hash", helloWorldHandler)
+	http.HandleFunc("/init", initFileUploadingHandler)
 
 	router := mux.NewRouter()
 	router.HandleFunc("/file/{hash}", uploadFileHandler)
 	http.Handle("/", router)
+}
+
+type initState struct {
+	Hash string `json:"hash"`
+}
+
+func initFileUploadingHandler(w http.ResponseWriter, r *http.Request) {
+	newFile := initState{Hash: "new hash"}
+	newFileJSON, _ := json.Marshal(newFile)
+	// w := io.PipeWriter{}
+	// defer w.Close()
+	// w.Write(newFileJSON)
+	w.Write(newFileJSON)
 }
 
 func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
