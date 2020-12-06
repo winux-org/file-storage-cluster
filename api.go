@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 // create a handler struct
@@ -23,7 +25,11 @@ func (h HttpHandler) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 
 // SetupHTTPRouting configures and setup the endpoints
 func SetupHTTPRouting() {
-	http.HandleFunc("/file/hash", helloWorldHandler)
+	http.HandleFunc("/fil/hash", helloWorldHandler)
+
+	router := mux.NewRouter()
+	router.HandleFunc("/file/{hash}", uploadFileHandler)
+	http.Handle("/", router)
 }
 
 func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
@@ -41,5 +47,11 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	io.WriteString(w, "Hello world!")
+}
+
+func uploadFileHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	fmt.Print(vars["hash"])
 	io.WriteString(w, "Hello world!")
 }
